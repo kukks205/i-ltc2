@@ -1,0 +1,86 @@
+<div class="example">
+    <blockquote>
+        <h5>ข้อมูลจำนวนประชากรผู้สูงอายุ จำแนกตามตามหน่วยบริการ ช่วงอายุและการอยู่อาศัย ในเขตอำเภอ{{older[0]['ampname']}}</h5>
+        <small>ประมวลผลล่าสุด วันที่ {{older[0]['last_calc']}}</small>
+    </blockquote>
+    <hr class="thin bg-grayLighter">
+    <div class="align-right">
+    <a href="#/popOlder" class="button success"><i class="icon mif-chevron-left"></i> กลับ</a>
+        <button class="image-button success" ng-click="exportData();">
+            Excel
+            <span class="icon mif-file-excel bg-darkGreen"></span>
+        </button>
+        <button class="image-button warning">
+            Print
+            <span class="icon mif-printer bg-darkOrange"></span>
+        </button>
+    </div>
+    <div class="input-control text" style="font-size: 13px;">
+        <span class="mif-search prepend-icon"></span>
+        <input type="text" ng-model="search" placeholder="ค้นหา...">
+    </div>
+    <div id="exportable">
+        <table id="popOlder" class="table striped hovered cell-hovered border bordered" data-auto-width="false">
+            <thead>
+                <tr>
+                    <th rowspan="3" style="text-align: center;">อำเภอ</th>
+                    <th rowspan="3" style="text-align: center;line-height: 1.2;">ประชากรอยู่จริงทั้งหมด(คน)</th>
+                    <th rowspan="3" style="text-align: center;line-height: 1.2;">ผู้สุงอายุเฉพาะอยู่จริง(คน)</th>
+                    <th rowspan="3" style="text-align: center;line-height: 1.2;">%</th>
+                    <th colspan="8" style="text-align: center;line-height: 1.2;">แยกตามช่วงวัย</th>
+                    <th colspan="4" style="text-align: center;line-height: 1.2;">แยกตามการอยู่อาศัย</th>
+                </tr>
+                <tr>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">60-69 ปี</th>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">70-79 ปี</th>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">80-89 ปี</th>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">90 ปีขึนไป</th>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">อยู่คนเดียว</th>
+                    <th colspan="2" style="text-align: center;line-height: 1.2;">อยู่กับครอบครัว</th>
+                </tr>
+                <tr>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                    <td>จำนวน</td>
+                    <td>%</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="o in older | filter:search" ">
+                    <td>{{o.hospname}}</td>
+                    <td align="center ">{{o.pop_all|number}}</td>
+                    <td align="center ">{{o.pop_old|number}}</td>
+                    <td align="center ">{{(o.pop_old*100)/o.pop_all|number:2}}</td>
+                    <td align="center ">{{o.pop_o1|number}}</td>
+                    <td align="center ">{{(o.pop_o1 * 100)/o.pop_old| number:2 }}</td>
+                    <td align="center ">{{o.pop_o2|number}}</td>
+                    <td align="center ">{{(o.pop_o2 * 100)/o.pop_old| number:2 }}</td>
+                    <td align="center ">{{o.pop_o3|number}}</td>
+                    <td align="center ">{{(o.pop_o3 * 100)/o.pop_old| number:2 }}</td>
+                    <td align="center ">{{o.pop_o4|number}}</td>
+                    <td align="center ">{{(o.pop_o4 * 100)/o.pop_old| number:2 }}</td>
+                    <td align="center ">{{o.alone|number}}</td>
+                    <td align="center ">{{(o.alone * 100)/o.pop_old| number:2 }}</td>
+                    <td align="center ">{{o.wf|number}}</td>
+                    <td align="center ">{{(o.wf * 100)/o.pop_old| number:2 }}</td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+<div class="grid"  ng-hide="dataloaded==true">
+    <div class="row cells1">
+        <div class="cell " style="text-align: center;line-height: 1.2; ">
+            <div data-role="preloader" data-type="ring" data-style="color" style="margin:auto "></div>
+            <small>รอซักครู่ครับ กำลังประมวลผล....</small>
+        </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>i-LTC ver 2.0</title>
+    <link rel="stylesheet" href="./lib/metro/css/metro.css">
+    <link href="./lib/metro/css/metro-icons.css" rel="stylesheet">
+    <link href="./lib/metro/css/metro-responsive.css" rel="stylesheet">
+    <link href="./lib/metro/css/metro-schemes.css" rel="stylesheet">
+    <script src="./lib/metro/js/jquery.js"></script>
+    <script src="./lib/jquery.dataTables.min.js"></script>
+    <script src="./lib/metro/js/metro.js"></script>
+    <script src="./lib/FileSaver.js" type="text/javascript"></script>
+    <script src="./node_modules/angular/angular.js"></script>
+    <script src="./node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="./node_modules/angular-aria/angular-aria.js"></script>
+    <script src="./node_modules/angular-animate/angular-animate.js"></script>
+    <script src="./node_modules/q/q.js"></script>
+    <script src="./js/app.js"></script>
+    <script src="./js/controllers/menuControllers.js"></script>
+    <script src="./js/controllers/popControllers.js"></script>
+    <style>
+    @media screen and (max-width: 800px) {
+        .countdown {
+            font-size: 1rem !important;
+        }
+    }
+    
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 13px;
+    }
+    
+    th {
+        text-align: center;
+    }
+    </style>
+</head>
+
+<body ng-app="myApp">
+    <header class="app-bar fixed-top navy" data-role="appbar">
+        <div class="container">
+            <a href="#" class="app-bar-element branding">
+                <!--<img src="images/ltc1.png" style="height: 28px; display: inline-block; margin-right: 10px;">-->
+                <span class="mif-windows"></span> i-LTC<sup> 2.0</sup>
+            </a>
+            <ul class="app-bar-menu small-dropdown">
+                <li><a href="#/home">Home</a></li>
+                <li>
+                    <a href="#" class="dropdown-toggle">ข้อมูลประชากร</a>
+                    <ul class="d-menu" data-role="dropdown" data-no-close="false">
+                        <li><a href="#/popOlder">ผู้สูงอายุ</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">ผู้พิการ</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Pallitive Care</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="dropdown-toggle">รายงานผลการคัดกรอง</a>
+                    <ul class="d-menu" data-role="dropdown" data-no-close="true">
+                        <li><a href="#">ผู้สูงอายุ</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Bartel ADL</a></li>
+                        <li>
+                            <a href="#" class="dropdown-toggle">Geriatric Syndrome</a>
+                            <ul class="d-menu" data-role="dropdown" data-no-close="true">
+                                <li><a href="#">ภาวะซึมเศร้า</a></li>
+                                <li><a href="#">ข้อเข่าเสื่อม</a></li>
+                                <li><a href="#">หกล้ม</a></li>
+                                <li><a href="#">กลั้นปัสสาวะ</a></li>
+                                <li><a href="#">การทดสอบสภาพสมอง(AMT)</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="app-bar-element place-right" ng-controller="loginController">
+                <!--กรณียังไม่ Login -->
+                <div ng-if="logged != 'true'">
+                    <a class="dropdown-toggle fg-white"><span class="mif-enter"></span> Login</a>
+                    <div class="app-bar-drop-container bg-white fg-dark place-right" data-role="dropdown" data-no-close="true">
+                        <div class="padding20">
+                            <form>
+                                <h4 class="text-light">Login เข้าสู่ระบบ
+                            <small>สำหรับเจ้าหน้าที่</small>
+                            </h4>
+                                <div class="input-control text">
+                                    <span class="mif-user prepend-icon"></span>
+                                    <input type="text" ng-model="loginData.username">
+                                </div>
+                                <div class="input-control text">
+                                    <span class="mif-lock prepend-icon"></span>
+                                    <input type="password" ng-model="loginData.password">
+                                </div>
+                                <label class="input-control checkbox small-check">
+                                    <input type="checkbox">
+                                    <span class="check"></span>
+                                    <span class="caption">Remember me</span>
+                                </label>
+                                <div class="form-actions">
+                                    <button class="button" ng-click="Login(loginData)">Login</button>
+                                    <button class="button link" onclick="location.reload();">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!--จบกรณียังไม่ Login -->
+                <!--กรณี Login แล้ว -->
+                <div ng-if="logged=='true'">
+                    <a class="fg-white" ng-click="Logout()"><span class="mif-switch"></span> Logout</a>
+                </div>
+                <!--จบกรณี Login แล้ว -->
+            </div>
+            <div class="app-bar-element place-right" ng-controller="loginController">
+                <a class="fg-white"><span class="mif-user"></span> สวัสดี {{username}}</a>
+            </div>
+            <span class="app-bar-pull "></span>
+        </div>
+    </header>
+    <div class="container page-content" style="padding-top: 80px;">
+        <ui-view></ui-view>
+    </div>
+</body>
+
+</html>
