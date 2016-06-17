@@ -23,6 +23,7 @@ order by v.village_id,h.address");
 $row->execute(); //execute the query  
 $obj = $row->fetchAll(PDO::FETCH_ASSOC);
 $json_data = [];
+
 foreach ($obj as $k) {
     array_push($json_data, $k);
 }

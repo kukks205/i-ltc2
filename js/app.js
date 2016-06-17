@@ -32,11 +32,16 @@ angular.module('myApp', [
                         templateUrl: "views/popOlder/pop_older.html",
                         controller: 'PopOlderController'
                     })
-                    .state('popOlderDetail', {
+                    .state('popOlderD', {
                         url: "/popOlderD/:cupID",
                         templateUrl: "views/popOlder/pop_older_detail.html",
                         controller: 'PopOlderDetailController'
                     })
+                    .state('viewPop', {
+                        url: "/viewPop/:hospcode",
+                        templateUrl: "views/popOlder/view_pop.html",
+                        controller: 'ViewPopOlderController'
+                    })                    
                     .state('home', {
                         url: "/home",
                         templateUrl: "views/home.html",

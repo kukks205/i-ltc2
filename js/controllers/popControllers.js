@@ -35,7 +35,7 @@ angular.module('pop.controllers', [])
 
 
     $scope.viewDetail = function(hospcode) {
-        
+
         //start check expire and level
 
         $http.post('webservice/tokenCheck.php', { 'token': $scope.token })
@@ -78,12 +78,12 @@ angular.module('pop.controllers', [])
 
                 } else {
 
-                        $.Notify({
-                            type: 'warning',
-                            caption: 'คุณไม่สิทธิ์เข้าถึงข้อมูลนี้',
-                            content: "กรุณา Login ก่อนจึงจะสามารถเข้าถึงข้อมูลส่วนนี้ได้" ,
-                            icon: "<span class='mif-lock'></span>"
-                        });
+                    $.Notify({
+                        type: 'warning',
+                        caption: 'คุณไม่สิทธิ์เข้าถึงข้อมูลนี้',
+                        content: "กรุณา Login ก่อนจึงจะสามารถเข้าถึงข้อมูลส่วนนี้ได้",
+                        icon: "<span class='mif-lock'></span>"
+                    });
                 }
                 //end check step1
 
@@ -123,72 +123,103 @@ angular.module('pop.controllers', [])
 
 .controller('ViewPopOlderController', ['$scope', '$http', '$stateParams', function($scope, $http, $stateParams) {
 
-    
-    $scope.hospcode = $stateParams.hospcode;
-    $scope.token = window.localStorage['token'];
+
+            $scope.hospcode = $stateParams.hospcode;
+            $scope.token = window.localStorage['token'];
+
+            if ($scope.token) {
+                //loginแล้ว
+
+                //start check expire and level
+
+                $http.post('webservice/tokenCheck.php', { 'token': $scope.token })
+                    .success(function(data) {
+
+                            $scope.status = data[0]['status'];
 
 
-        //start check expire and level
-
-        $http.post('webservice/tokenCheck.php', { 'token': $scope.token })
-            .success(function(data) {
-                $scope.status = data[0]['status'];
+                            //start check step1 ตรวจสอบ token
+                            if ($scope.status == 'Success') {
 
 
-                //start check step1
-                if ($scope.status == 'Success') {
 
-                    var d = new Date();
-                    $scope.info = data[1];
-                    $scope.dateNow = moment().format();
+                                var d = new Date();
+                                $scope.info = data[1];
+                                $scope.dateNow = moment().format();
 
-                    //start check step2 
+                                //start check step2 ตรวจสอบ expire date
 
-                    if ($scope.dateNow > $scope.info.expire) {
+                                if ($scope.dateNow > $scope.info.expire) {
 
-                        window.localStorage.removeItem('logged');
-                        window.localStorage.removeItem('username');
-                        window.localStorage.removeItem('fullname');
-                        window.localStorage.removeItem('hospcode');
-                        window.localStorage.removeItem('hospname');
-                        window.localStorage.removeItem('token');
+                                    //ในกรณีหมดเวลา
 
-                        $.Notify({
-                            type: 'warning',
-                            caption: 'หมดเวลาการเชื่อมต่อ',
-                            content: "กำลังออกจากระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
-                            icon: "<span class='mif-lock'></span>"
+                                    window.localStorage.removeItem('logged');
+                                    window.localStorage.removeItem('username');
+                                    window.localStorage.removeItem('fullname');
+                                    window.localStorage.removeItem('hospcode');
+                                    window.localStorage.removeItem('hospname');
+                                    window.localStorage.removeItem('token');
+
+                                    $.Notify({
+                                        type: 'warning',
+                                        caption: 'หมดเวลาการเชื่อมต่อ',
+                                        content: "กำลังออกจากระบบ กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+                                        icon: "<span class='mif-lock'></span>"
+                                    });
+
+
+                                } else {
+
+                                    //ยังไม่หมดเวลา
+
+                                    $http.$.post('webservice/popOlderDD.php', { 'hospcode': $scope.hospcode })
+                                            .success(function(data) {
+                                                $scope.view = data;
+                                            })
+                                            .error(function(err) {
+                                                alert('ไม่สามารถแสดงข้อมูลได้ครับ');
+                                            });
+
+
+
+                                        }
+                                        //end check step2 
+
+
+
+                                } else {
+
+                                    $.Notify({
+                                        type: 'warning',
+                                        caption: 'คุณไม่สิทธิ์เข้าถึงข้อมูลนี้',
+                                        content: "กรุณา Login ก่อนจึงจะสามารถเข้าถึงข้อมูลส่วนนี้ได้",
+                                        icon: "<span class='mif-lock'></span>"
+                                    });
+                                }
+                                //end check step1
+
+
+                                $scope.dataloaded = true;
+                            })
+                        .error(function(err) {
+                            alert('ไม่สามารถแสดงข้อมูลได้ครับ');
                         });
 
+                        //end check expire and level
 
-                    } else {
-
-                        alert(hospcode);
 
                     }
-                    //end check step2 
+                else {
 
-                } else {
+                    //ยังไม่ login
+                    $.Notify({
+                        type: 'warning',
+                        caption: 'คุณไม่สิทธิ์เข้าถึงข้อมูลนี้',
+                        content: "กรุณา Login ก่อนจึงจะสามารถเข้าถึงข้อมูลส่วนนี้ได้",
+                        icon: "<span class='mif-lock'></span>"
+                    });
 
-                        $.Notify({
-                            type: 'warning',
-                            caption: 'คุณไม่สิทธิ์เข้าถึงข้อมูลนี้',
-                            content: "กรุณา Login ก่อนจึงจะสามารถเข้าถึงข้อมูลส่วนนี้ได้" ,
-                            icon: "<span class='mif-lock'></span>"
-                        });
                 }
-                //end check step1
 
 
-                $scope.dataloaded = true;
-            })
-            .error(function(err) {
-                alert('ไม่สามารถแสดงข้อมูลได้ครับ');
-            });
-
-        //end check expire and level
- 
-}]);
-
-
-
+            }]);
