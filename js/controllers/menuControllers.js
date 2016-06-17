@@ -8,11 +8,11 @@ angular.module('menu.controllers', [])
 
     if ($scope.logged == 'true') {
 
-        $scope.fullname = window.localStorage['fullname'];
+        $scope.fullname = 'คุณ'+window.localStorage['fullname'];
 
     } else {
 
-        $scope.username = 'Guest';
+        $scope.fullname = 'Guest';
 
     }
 
@@ -27,6 +27,7 @@ angular.module('menu.controllers', [])
         window.localStorage.removeItem('fullname');
         window.localStorage.removeItem('hospcode');
         window.localStorage.removeItem('hospname');
+        window.localStorage.removeItem('token');
 
 
         $.Notify({
@@ -43,7 +44,6 @@ angular.module('menu.controllers', [])
 
 
     $scope.Login = function(user) {
-
 
         var username = user.username;
         var password = user.password
@@ -66,6 +66,7 @@ angular.module('menu.controllers', [])
                     window.localStorage['fullname'] = $scope.info.fullname;
                     window.localStorage['hospcode'] = $scope.info.hoscode;
                     window.localStorage['hospname'] = $scope.info.hospname;
+                    window.localStorage['token'] = $scope.info.token;
 
                     $.Notify({
                         type: 'success',

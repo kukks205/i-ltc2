@@ -55,7 +55,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="o in older | filter:search" ">
-                    <td>{{o.hospname}}</td>
+                    <td><div ng-click="viewDetail(o.hospcode)">{{o.hospname}}</div></td>
                     <td align="center ">{{o.pop_all|number}}</td>
                     <td align="center ">{{o.pop_old|number}}</td>
                     <td align="center ">{{(o.pop_old*100)/o.pop_all|number:2}}</td>
