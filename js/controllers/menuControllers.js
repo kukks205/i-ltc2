@@ -86,7 +86,7 @@ angular.module('menu.controllers', [])
                     $.Notify({
                         type: 'warning',
                         caption: 'ไม่สามารถ Loin ได้',
-                        content: "กรุณาตรวจสอบ username หรือ password" + user.username,
+                        content: "กรุณาตรวจสอบ username หรือ password",
                         icon: "<span class='mif-lock'></span>"
                     });
 
