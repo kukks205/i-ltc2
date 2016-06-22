@@ -18,7 +18,70 @@
         <span class="mif-search prepend-icon"></span>
         <input type="text" ng-model="search" placeholder="ค้นหา...">
     </div>
-    <div id="exportable">
+
+            <div id="exportable">
+                <table id="example" class="table striped hovered cell-hovered border bordered" width="100%">
+                    <thead>
+                        <tr>
+                            <th rowspan="3" style="text-align: center;">อำเภอ</th>
+                            <th rowspan="3" style="text-align: center;">ผู้สุงอายุเฉพาะอยู่จริง(คน)</th>
+                            <th rowspan="3" style="text-align: center;">คัดกรอง</th>
+                            <th rowspan="3" style="text-align: center;">%</th>
+                            <th colspan="6" style="text-align: center;">แบ่งตามสมรรถนะ</th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" style="text-align: center;">ติดสังคม</th>
+                            <th colspan="2" style="text-align: center;">ติดบ้าน</th>
+                            <th colspan="2" style="text-align: center;">ติดเตียง</th>
+                        </tr>
+                        <tr>
+                            <th style="text-align: center;">จำนวน</th>
+                            <th style="text-align: center;">%</th>
+                            <th style="text-align: center;">จำนวน</th>
+                            <th style="text-align: center;">%</th>
+                            <th style="text-align: center;">จำนวน</th>
+                            <th style="text-align: center;">%</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="o in older | filter:search">
+                            <td>
+                                <div ng-if="o.amp == 0" >{{o.name}}</div>
+                                <div ng-if="o.amp > 0">
+                                    <a ng-href="#">{{o.name}}</a>
+                                </div>
+                            </td>
+                            <td align="center">{{o.pop_old|number}}</td>
+                           
+                            <td align="center">
+                                <div ng-if="o.t0 < 1">0</div>
+                                <div ng-if="o.t0 > 0">{{o.t0|number}}</div>      
+                            </td>
+                            <td align="center">{{(o.t0 * 100)/o.pop_old|number:2}}</td>
+                            
+                            <td align="center">
+                                <div ng-if="o.at1 < 1">0</div>
+                                <div ng-if="o.at1 > 0">{{o.at1|number}}</div>    
+                            </td>
+                            <td align="center">{{(o.at1 * 100)/o.pop_old| number:2 }}</td>
+                            <td align="center">
+                                <div ng-if="o.at2 < 1">0</div>
+                                <div ng-if="o.at2 > 0">{{o.at2|number}}</div>                            
+                            </td>
+                            <td align="center">{{(o.at2 * 100)/o.pop_old| number:2 }}</td>
+                            <td align="center">
+                                <div ng-if="o.at3 < 1">0</div>
+                                <div ng-if="o.at3 > 0">{{o.at3|number}}</div>                            
+                            </td>
+                            <td align="center">{{(o.at3 * 100)/o.pop_old| number:2 }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+   <!-- <div id="exportable">
         <table id="popOlder" class="table striped hovered cell-hovered border bordered" data-auto-width="false">
             <thead>
                 <tr>
@@ -78,7 +141,7 @@
     </tr>
     </tbody>
     </table>
-</div>
+</div>-->
 <div class="grid" ng-hide="dataloaded == true">
     <div class="row cells1">
         <div class="cell" style="text-align: center;line-height: 1.2;">

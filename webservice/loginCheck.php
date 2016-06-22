@@ -1,7 +1,7 @@
 <?php
 
-// header('Access-Control-Allow-Origin: *');
-// header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+ header('Access-Control-Allow-Origin: *');
+ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 
 
 include 'includes/conf.audit.php';
@@ -23,8 +23,8 @@ $sql ="select
 p.user_id,
 p.level_userid,u.username,u.`password`,
 concat(p.firstname,'  ',p.lastname) as fullname,
-p.dep_id as hoscode,
-concat(h.hosptype,h.`name`) as hospname,
+p.dep_id as hoscode,h.amppart,
+concat(h.hosptype,h.`name`) as hospname,concat(h.chwpart,h.amppart) as amp,
 MD5(concat(u.username,u.`password`,p.dep_id,'$datetime'))as token
 from `profiles` as p
 join users as u on u.id = p.user_id

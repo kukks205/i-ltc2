@@ -1,14 +1,47 @@
 <div class="example">
     <blockquote>
-        <h5>ข้อมูลจำนวนประชากรผู้สูงอายุ จำแนกตามตามหน่วยบริการ ช่วงอายุและการอยู่อาศัย ในเขตอำเภอ{{}}</h5>
-        <small>ประมวลผลล่าสุด วันที่ {{}}</small>
+        <h4>รายชื่อประชากรผู้สูงอายุ ในเขตรับผิดชอบ {{view[0]['hospname']}}</h4>
+        <small>ประมวลผลล่าสุด วันที่ {{dateNow}}</small>
     </blockquote>
     <hr class="thin bg-grayLighter">
-    <ul>
-    <li ng-repeat="v in view">
-    lllll
-    {{v.cid}}
-    </li>
-    </ul>
+    <p class="padding20 bg-grayLighter" ng-show="access == 'yes'">
+        เงื่อนไขการแสดงผล : อายุ 60 ปีขึ้นไป สถานะการจำหน่าย ยังไม่จำหน่าย(9) สถานะการอยู่อาศัย เท่ากับ 1และ3
+    </p>
+    <div class="padding20 bg-orange fg-white" ng-if="access == 'no'">
+        <h4>คุณไม่มีสิทเข้าใช้งานเมนูนี้ !</h4>
+        <p>กรุณา login เพื่อเข้าสู่ระบบก่อนใช้งานเมนูนี้ หรือตรวจสอบสิทธิ์การเข้าใช้งานหรือรหัสของสถานบริการที่คุณมีสิทธิ์เข้าถึงข้อมูลในส่วนนี้ครับ</p>
+    </div>
 
+
+
+    <div class="grid" ng-hide="dataloaded == true">
+        <div class="row cells1">
+            <div class="cell" style="text-align: center;line-height: 1.2;">
+                <div data-role="preloader" data-type="ring" data-style="color" style="margin: auto"></div>
+                <small>รอซักครู่ครับ กำลังประมวลผล....</small>
+            </div>
+        </div>
+    </div>
+    <div ng-if="access == 'yes'">
+        <table datatable="ng" dt-options="dtOptions" dt-column-defs="dtColumnDefs" class="table striped hovered cell-hovered border bordered" data-auto-width="false">
+            <thead>
+                <tr>
+                    <th>CID</th>
+                    <th>ชื่อ - สกุล</th>
+                    <th>อายุ</th>
+                    <th>ที่อยู่</th>
+                    <th>หมู่</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="v in view">
+                    <td>{{ v.cid }}</td>
+                    <td>{{ v.ptname }}</td>
+                    <td>{{ v.age_y }}</td>
+                    <td>{{ v.address }}</td>
+                    <td>{{ v.village_moo }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
