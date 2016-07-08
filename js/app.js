@@ -49,6 +49,11 @@ angular.module('myApp', [
             templateUrl: "views/adl/adl.html",
             controller: 'AdlSummaryController'
         })
+        .state('adlD', {
+            url: "/adlD/:cupID",
+            templateUrl: "views/adl/adl_d.html",
+            controller: 'AdlDetailController'
+        })
         .state('home', {
             url: "/home",
             templateUrl: "views/home.html",
